@@ -1,0 +1,186 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* `dark:` variant follows the data-theme attribute set before first paint. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #fbfbfa;
+  --surface: #ffffff;
+  --surface-2: #f3f3f1;
+  --fg: #111113;
+  --fg-soft: #3b3b40;
+  --muted: #5f5f66;
+  --border: #e4e4e0;
+  --border-strong: #cfcfc9;
+  --accent: #0b7a6c;
+  --accent-soft: #e3f3f0;
+  --accent-fg: #ffffff;
+  --grid: rgb(17 17 19 / 0.05);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b0c0e;
+  --surface: #121418;
+  --surface-2: #181b20;
+  --fg: #ececee;
+  --fg-soft: #c9c9cf;
+  --muted: #9a9aa3;
+  --border: #23262d;
+  --border-strong: #353942;
+  --accent: #3fd1ba;
+  --accent-soft: #0f2b27;
+  --accent-fg: #06201c;
+  --grid: rgb(255 255 255 / 0.04);
+  color-scheme: dark;
+}
+
+/* No-JS fallback: follow the OS setting when no theme has been chosen. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #0b0c0e;
+    --surface: #121418;
+    --surface-2: #181b20;
+    --fg: #ececee;
+    --fg-soft: #c9c9cf;
+    --muted: #9a9aa3;
+    --border: #23262d;
+    --border-strong: #353942;
+    --accent: #3fd1ba;
+    --accent-soft: #0f2b27;
+    --accent-fg: #06201c;
+    --grid: rgb(255 255 255 / 0.04);
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-fg-soft: var(--fg-soft);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Subtle engineering-paper grid used behind the hero. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 80% 70% at 30% 20%, #000 40%, transparent 100%);
+}
+
+/* Hide the default disclosure marker on the mobile menu. */
+summary::-webkit-details-marker {
+  display: none;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.5s ease-out both;
+}
+
+/* ---------- Long-form content (blog, project write-ups) ---------- */
+.prose {
+  --tw-prose-body: var(--fg-soft);
+  --tw-prose-headings: var(--fg);
+  --tw-prose-lead: var(--fg-soft);
+  --tw-prose-links: var(--fg);
+  --tw-prose-bold: var(--fg);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--border-strong);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--fg);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-captions: var(--muted);
+  --tw-prose-code: var(--fg);
+  --tw-prose-pre-code: var(--fg);
+  --tw-prose-pre-bg: var(--surface-2);
+  --tw-prose-th-borders: var(--border-strong);
+  --tw-prose-td-borders: var(--border);
+}
+
+.prose :where(a):not(:where([class~="not-prose"] *)) {
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.875em;
+}
+
+.prose :where(:not(pre) > code):not(:where([class~="not-prose"] *)) {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+  font-weight: 500;
+}
+.prose :where(:not(pre) > code):not(:where([class~="not-prose"] *))::before,
+.prose :where(:not(pre) > code):not(:where([class~="not-prose"] *))::after {
+  content: none;
+}
+
+.prose :where(h2, h3):not(:where([class~="not-prose"] *)) {
+  scroll-margin-top: 6rem;
+  letter-spacing: -0.015em;
+}

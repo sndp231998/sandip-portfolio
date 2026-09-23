@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    image: sandip-portfolio:latest
+    container_name: sandip-portfolio
+    restart: unless-stopped
+    ports:
+      # Only reachable from the server itself; put Nginx/Caddy in front for HTTPS.
+      # Change to "3000:3000" to expose it directly.
+      - "127.0.0.1:3000:3000"

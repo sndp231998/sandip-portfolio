@@ -1,0 +1,66 @@
+export const meta = {
+  title: "Building a fast, search-friendly personal website with Next.js",
+  description:
+    "How this site is built: static generation, server components, semantic HTML, a linked JSON-LD graph, and llms.txt — and why the framework alone does not make a site rank.",
+  publishedAt: "2026-09-24",
+  tags: ["Next.js", "SEO", "Web performance", "Structured data"],
+  schemaType: "TechArticle",
+  // Draft: visible in `npm run dev` only. Review, edit, then set to false to publish.
+  draft: true,
+};
+
+A common assumption is that choosing Next.js automatically gives you good SEO. It does not. A framework can make good
+SEO *possible*; the content, the HTML it produces, and the way pages link together are what search engines and AI
+systems actually read.
+
+This article explains the decisions behind this website.
+
+## Render everything important on the server
+
+Every page on this site is statically generated at build time. The HTML that a crawler downloads already contains
+the page's heading, text, links and structured data — nothing has to wait for client-side JavaScript.
+
+In the App Router, components are Server Components by default, so this is mostly a matter of *not* opting out.
+The only client component on the site is the light/dark theme toggle.
+
+```tsx
+// A page is a plain async server component. No "use client", no data fetching in the browser.
+export default async function BlogPage() {
+  const posts = await getAllPosts(); // runs at build time
+  return <PostList posts={posts} />;
+}
+```
+
+## One source of truth for identity
+
+Search engines build a picture of a person from many signals. If the job title says one thing on the homepage and
+another on the about page, that picture gets blurry. All identity facts on this site — name, role, company,
+education — live in a single `profile.ts` file that every page, the metadata, and the structured data read from.
+
+## A linked JSON-LD graph
+
+Each page emits Schema.org JSON-LD. The important part is that entities have stable `@id`s, so they connect across
+pages instead of being repeated as unrelated fragments:
+
+| Entity          | `@id`                  | Linked to                          |
+| --------------- | ---------------------- | ---------------------------------- |
+| Person          | `/#person`             | `worksFor` → Organization          |
+| Organization    | `/#a1-it-innovation`   | `founder` → Person                 |
+| WebSite         | `/#website`            | `publisher` → Person               |
+| TechArticle     | `/blog/<slug>#article` | `author` → Person                  |
+
+## Metadata per page
+
+Every route calls one helper that returns a unique title, description, canonical URL, and Open Graph and Twitter
+tags. Centralising this makes it hard to forget a canonical URL or ship two pages with the same title.
+
+## llms.txt as a supplement
+
+The site also serves `/llms.txt`: a short Markdown summary of who I am and what is on the site, generated from the
+same data as everything else. It is a convenience for AI agents, not a replacement for normal HTML and structured
+data.
+
+## What actually matters
+
+None of the above helps if the content is thin. The technical work removes obstacles; useful, accurate writing is
+still the thing that earns attention.
