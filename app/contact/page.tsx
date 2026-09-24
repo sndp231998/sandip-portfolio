@@ -24,6 +24,20 @@ export default function ContactPage() {
 
   const channels = [
     email && { label: "Email", value: email, href: `mailto:${email}`, note: "Best for direct enquiries.", rel: undefined },
+    {
+      label: "WhatsApp",
+      value: profile.phone.display,
+      href: profile.phone.whatsapp,
+      note: "Message me on WhatsApp.",
+      rel: "noopener",
+    },
+    {
+      label: "Phone",
+      value: profile.phone.display,
+      href: `tel:${profile.phone.e164}`,
+      note: "Call directly.",
+      rel: undefined,
+    },
     ...profile.socials.map((s) => ({
       label: s.label,
       value: s.url.replace(/^https?:\/\/(www\.)?/, ""),
@@ -70,6 +84,26 @@ export default function ContactPage() {
             </li>
           ))}
         </ul>
+
+        <section aria-labelledby="company-social-heading" className="mt-12">
+          <h2 id="company-social-heading" className="font-mono text-xs uppercase tracking-[0.16em] text-muted">
+            {company.shortName} on social media
+          </h2>
+          <ul className="mt-4 flex flex-wrap gap-3">
+            {company.socials.map((s) => (
+              <li key={s.url}>
+                <a
+                  href={s.url}
+                  rel="noopener"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-border-strong px-3 py-2 text-sm text-fg hover:border-muted"
+                >
+                  {s.label} <ArrowUpRight className="size-3.5" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <Placeholder todo={profile.email} />
         <Placeholder todo={profile.socialsTodo} />
       </Container>

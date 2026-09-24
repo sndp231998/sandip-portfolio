@@ -57,13 +57,24 @@ export const profile = {
 
   email: todo("Public contact email address (only if you want it published)") as Maybe<string>,
 
+  /** Phone number, also reachable on WhatsApp. */
+  phone: {
+    display: "+977 981-6032025",
+    e164: "+9779816032025",
+    whatsapp: "https://wa.me/9779816032025",
+  },
+
   /**
-   * Only verified profiles belong here. Add GitHub, LinkedIn, Google Scholar,
-   * ORCID, etc. once you provide the exact URLs.
+   * Sandip's own verified profiles. Entries with sameAs: true go into the
+   * Person JSON-LD and are linked with rel="me".
    */
-  socials: [] as SocialLink[],
+  socials: [
+    { label: "GitHub", url: "https://github.com/sndp231998", sameAs: true },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/sandip-chapagain", sameAs: true },
+    { label: "Facebook", url: "https://www.facebook.com/sndp.com.np", sameAs: true },
+  ] as SocialLink[],
   socialsTodo: todo(
-    "Provide exact URLs for GitHub, LinkedIn, Google Scholar, ORCID or any other profile you want linked (these become schema.org sameAs)",
+    "Optional: Google Scholar or ORCID profile URLs once you start publishing research",
   ),
 
   /** Topics used for schema.org Person.knowsAbout. */
@@ -98,12 +109,22 @@ export type Degree = {
   name: string;
   abbreviation: string;
   field: string;
+  /** Campus / college. */
   institution: Maybe<string>;
+  /** Affiliated university, if the campus is part of one. */
+  university?: string;
   institutionUrl?: Maybe<string>;
+  /** Period of study, e.g. "2019 – 2024". */
   year: Maybe<string>;
   status: "Completed";
   description: string;
 };
+
+/** "Damak Multiple Campus, Tribhuvan University" */
+export function institutionLabel(d: Degree): string | undefined {
+  if (typeof d.institution !== "string") return undefined;
+  return d.university ? `${d.institution}, ${d.university}` : d.institution;
+}
 
 export const education: Degree[] = [
   {
@@ -111,8 +132,9 @@ export const education: Degree[] = [
     name: "Master of Information Technology",
     abbreviation: "MIT",
     field: "Information Technology",
-    institution: todo("University / college name for your MIT"),
-    year: todo("MIT completion year"),
+    institution: "Bhaktapur Multiple Campus",
+    university: "Tribhuvan University",
+    year: "2024 – 2026",
     status: "Completed",
     description:
       "Postgraduate study in information technology, building on the software development foundation from the BCA.",
@@ -122,8 +144,10 @@ export const education: Degree[] = [
     name: "Bachelor of Computer Applications",
     abbreviation: "BCA",
     field: "Computer Applications",
-    institution: todo("University / college name for your BCA"),
-    year: todo("BCA completion year"),
+    institution: "Damak Multiple Campus",
+    university: "Tribhuvan University",
+    // The programme ran longer than the usual four years because of COVID-19 disruptions.
+    year: "2019 – 2024",
     status: "Completed",
     description:
       "Undergraduate degree covering programming, data structures, databases, networking and software engineering.",
@@ -139,8 +163,13 @@ export const company = {
   countryCode: "NP",
   role: "Founder",
   foundingDate: todo("Year A1 IT Innovation was founded") as Maybe<string>,
+  /** The company's own social profiles (Organization.sameAs — not Sandip's personal identity). */
+  socials: [
+    { label: "Facebook", url: "https://www.facebook.com/a1itinnovationnepal" },
+    { label: "TikTok", url: "https://www.tiktok.com/@a1itinnovation" },
+  ],
   description:
-    "A1 IT Innovation Pvt. Ltd. is a software development and IT solutions company in Nepal, founded by Sandip Chapagain.",
+    "A1 IT Innovation Pvt. Ltd. is a software development and IT solutions company in Nepal, founded by Sandip Chapagain. Its team builds products and client projects, with Sandip contributing across backend development, DevOps and system design.",
   focusAreas: [
     { title: "Java & backend systems", body: "Server-side applications and APIs built with Java and Spring Boot." },
     { title: "Web applications", body: "Web front ends and dashboards, including React-based interfaces." },

@@ -53,10 +53,10 @@ export const projects: Project[] = [
     name: "Tufan Ride",
     tagline: "Ride-sharing platform for Nepal",
     summary:
-      "Tufan Ride is a Nepal-based ride-sharing platform with rider and passenger apps, location services, payments and real-time communication. Sandip Chapagain contributes to its engineering through A1 IT Innovation.",
+      "Tufan Ride is a Nepal-based ride-sharing platform with rider and passenger apps, location services, payments and real-time communication. Sandip Chapagain contributes to its backend, DevOps and system design through A1 IT Innovation.",
     relationship:
-      "Sandip Chapagain's work on Tufan Ride is a technical contribution made through A1 IT Innovation Pvt. Ltd.",
-    role: "Engineering contribution via A1 IT Innovation",
+      "Sandip Chapagain's work on Tufan Ride is a technical contribution made through A1 IT Innovation Pvt. Ltd., as part of the company's team.",
+    role: "Backend, DevOps & system design (via A1 IT Innovation)",
     via: { name: "A1 IT Innovation Pvt. Ltd.", url: "https://a1itinnovation.com.np" },
     url: todo("Official Tufan Ride website or app store link"),
     period: todo("When your work on Tufan Ride started (and ended, if applicable)"),
@@ -129,11 +129,14 @@ export const projects: Project[] = [
           technologies: ["Docker", "Kubernetes", "DevOps"],
         },
       ],
-      contribution: todo(
-        "Describe exactly which parts you built or led (e.g. which services, the payment integration, infrastructure setup, CI/CD). Be specific — this is the most important section for your portfolio.",
-      ),
+      contribution: [
+        "I contributed to Tufan Ride as part of the A1 IT Innovation team, in three areas:",
+        "Backend — work on the Java and Spring Boot backend and the REST APIs used by the rider and passenger applications.",
+        "DevOps — work on containerising the services with Docker, running them on Kubernetes, and the server infrastructure the platform runs on.",
+        "System design — work on how the backend services, data stores (MySQL, Redis) and messaging (Kafka, RabbitMQ) fit together to support ride requests, location updates, payments and real-time communication.",
+      ],
       challenges: todo(
-        "2–4 real technical challenges you faced (e.g. keeping location data fresh, payment callback reliability, message ordering) and how you solved them.",
+        "2–4 real technical challenges you faced (e.g. keeping location data fresh, payment callback reliability, message ordering) and how you solved them. Also: name specific pieces you personally built, if you want to go deeper than the three areas.",
       ),
       results: todo(
         "Only verifiable outcomes you are comfortable publishing (launch date, cities, performance improvements). Leave empty if unsure.",
@@ -142,11 +145,57 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "t-meet",
+    name: "T-Meet",
+    tagline: "Video conferencing built in Nepal",
+    summary:
+      "T-Meet is a video conferencing system for online classes and business meetings, built in Nepal with a focus on data security. Sandip Chapagain contributes to its backend, DevOps and system design through A1 IT Innovation.",
+    relationship:
+      "Sandip Chapagain's work on T-Meet is a technical contribution made through A1 IT Innovation Pvt. Ltd., as part of the company's team.",
+    role: "Backend, DevOps & system design (via A1 IT Innovation)",
+    via: { name: "A1 IT Innovation Pvt. Ltd.", url: "https://a1itinnovation.com.np" },
+    url: "https://tmeet.tsaedu.com/",
+    period: todo("When your work on T-Meet started (and ended, if applicable)"),
+    status: "Active",
+    category: "Product",
+    applicationCategory: "CommunicationApplication",
+    featured: true,
+    technologies: ["Video conferencing", "Backend development", "DevOps", "System design", "Data security"],
+    features: [
+      "Video meetings for online classes and education",
+      "Video meetings for businesses",
+      "A Nepali product, with data security as a priority",
+    ],
+    sections: {
+      problem: [
+        "Schools, colleges and businesses in Nepal depend on video conferencing for classes and meetings. The most widely used tools are built and hosted abroad, which gives Nepali organisations little control over where their meeting data goes.",
+        "T-Meet was built as a Nepali alternative for education and business meetings, with the security of that data treated as a priority.",
+      ],
+      solution: [
+        "T-Meet provides video conferencing for education, such as online classes, and for business meetings. It is developed in Nepal as a Nepali product, with data security as a core requirement rather than an afterthought.",
+      ],
+      architecture: todo(
+        "Describe the architecture and tech stack: e.g. backend language/framework, media handling (WebRTC? SFU/media server?), signalling, database, how meeting data is secured, and where it is hosted. Also add the real technologies to the `technologies` list.",
+      ),
+      contribution: [
+        "I contributed to T-Meet as part of the A1 IT Innovation team, in three areas:",
+        "Backend — work on the server-side systems behind meetings and users.",
+        "DevOps — work on deployment and the server infrastructure T-Meet runs on.",
+        "System design — work on how the platform's components fit together, with data security as a design requirement.",
+      ],
+      challenges: todo(
+        "2–4 real technical challenges (e.g. video quality on slow connections, scaling meetings, securing meeting data) and how you solved them.",
+      ),
+      results: todo("Only verifiable outcomes you are comfortable publishing (e.g. institutions using it, launch date)."),
+      lessons: todo("What you learned building a video conferencing system."),
+    },
+  },
+  {
     slug: "a1-it-innovation",
     name: "A1 IT Innovation Pvt. Ltd.",
     tagline: "Software development and IT solutions company, Nepal",
     summary:
-      "A1 IT Innovation Pvt. Ltd. is a software development and IT solutions company in Nepal founded by Sandip Chapagain. It works on backend systems, web and mobile applications, DevOps and cloud infrastructure.",
+      "A1 IT Innovation Pvt. Ltd. is a software development and IT solutions company in Nepal founded by Sandip Chapagain. Its team works on backend systems, web and mobile applications, DevOps and cloud infrastructure, for its own products and client projects.",
     relationship: "Founder",
     role: "Founder",
     url: "https://a1itinnovation.com.np",
@@ -176,7 +225,9 @@ export const projects: Project[] = [
         "Optional: describe the company's standard engineering setup (e.g. common stack, CI/CD approach, deployment platform).",
       ),
       contribution: [
-        "Founded the company and works on its software engineering.",
+        "I founded A1 IT Innovation.",
+        "I contribute to the company's products and client projects together with the rest of the A1 IT Innovation team, mainly on backend development, DevOps and system design.",
+        "Projects the company has worked on include the Tufan Ride ride-sharing platform and the T-Meet video conferencing system.",
       ],
       challenges: todo("Optional: engineering or organisational challenges of building the company."),
       results: todo("Optional: publicly shareable outcomes (projects delivered, products launched). Do not include client names without permission."),

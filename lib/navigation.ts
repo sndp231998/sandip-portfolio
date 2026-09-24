@@ -25,6 +25,7 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
     items: [
       { href: "/projects", label: "All projects" },
       { href: "/projects/tufan-ride", label: "Tufan Ride" },
+      { href: "/projects/t-meet", label: "T-Meet" },
       { href: "/projects/a1-it-innovation", label: "A1 IT Innovation" },
     ],
   },

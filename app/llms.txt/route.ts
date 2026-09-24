@@ -1,4 +1,4 @@
-import { company, education, profile, site } from "@/content/profile";
+import { company, education, institutionLabel, profile, site } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { papers, researchInterests } from "@/content/research/papers";
 import { getAllPosts } from "@/lib/blog";
@@ -27,7 +27,11 @@ export async function GET() {
     `- Role: ${profile.roles.join(", ")}`,
     `- Location: ${profile.location.country}`,
     `- Company: Founder of ${company.name} (${company.url})`,
-    `- Education: ${education.map((d) => `${d.name} (${d.abbreviation})${known(d.institution) ? `, ${known(d.institution)}` : ""}`).join("; ")}`,
+    `- Education: ${education
+      .map((d) =>
+        [`${d.name} (${d.abbreviation})`, institutionLabel(d), known(d.year)].filter(Boolean).join(", "),
+      )
+      .join("; ")}`,
     `- Website: ${site.url}`,
     ...(socials.length ? ["", "## Profiles", "", ...socials] : []),
     "",

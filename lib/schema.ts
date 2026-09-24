@@ -1,4 +1,4 @@
-import { company, education, profile, site } from "@/content/profile";
+import { company, education, profile, site, type Degree } from "@/content/profile";
 import type { Project } from "@/content/projects";
 import type { Paper } from "@/content/research/papers";
 import type { Post } from "@/lib/blog";
@@ -40,13 +40,22 @@ export function graph(...nodes: Node[]) {
   return { "@context": "https://schema.org", "@graph": nodes };
 }
 
+/** Campus as an EducationalOrganization, linked to its parent university. */
+function institutionNode(d: Degree): Node | undefined {
+  const name = known(d.institution);
+  if (!name) return undefined;
+  return compact({
+    "@type": "EducationalOrganization",
+    name,
+    parentOrganization: d.university ? { "@type": "CollegeOrUniversity", name: d.university } : undefined,
+    address: { "@type": "PostalAddress", addressCountry: "NP" },
+  });
+}
+
 export function personNode(): Node {
   const image = known(profile.image);
   const city = known(profile.location.city);
-  const alumni = education
-    .map((d) => known(d.institution))
-    .filter((name): name is string => Boolean(name))
-    .map((name) => ({ "@type": "EducationalOrganization", name }));
+  const alumni = education.map(institutionNode).filter(Boolean);
 
   return compact({
     "@type": "Person",
@@ -60,6 +69,7 @@ export function personNode(): Node {
     jobTitle: profile.jobTitle,
     description: profile.summary,
     email: known(profile.email) ? `mailto:${known(profile.email)}` : undefined,
+    telephone: profile.phone.e164,
     worksFor: ref(ids.organization),
     nationality: { "@type": "Country", name: profile.location.country },
     homeLocation: {
@@ -78,9 +88,8 @@ export function personNode(): Node {
         credentialCategory: "degree",
         educationalLevel: d.abbreviation === "MIT" ? "Master's degree" : "Bachelor's degree",
         about: d.field,
-        recognizedBy: known(d.institution)
-          ? { "@type": "EducationalOrganization", name: known(d.institution) }
-          : undefined,
+        recognizedBy: d.university ? { "@type": "CollegeOrUniversity", name: d.university } : institutionNode(d),
+        temporalCoverage: known(d.year)?.replace(/\s*–\s*/, "/"),
       }),
     ),
     knowsAbout: [...profile.knowsAbout],
@@ -100,6 +109,7 @@ export function organizationNode(): Node {
     founder: ref(ids.person),
     address: { "@type": "PostalAddress", addressCountry: company.countryCode },
     knowsAbout: company.focusAreas.map((a) => a.title),
+    sameAs: company.socials.map((s) => s.url),
   });
 }
 

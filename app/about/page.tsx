@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Placeholder } from "@/components/ui/Placeholder";
-import { company, education, profile } from "@/content/profile";
+import { company, education, institutionLabel, profile } from "@/content/profile";
 import { researchInterests } from "@/content/research/papers";
 import { ids, pageGraph, type Crumb } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
@@ -38,7 +38,7 @@ export default function AboutPage() {
       </>,
     ],
     ["Location", city ? `${city}, ${profile.location.country}` : profile.location.country],
-    ["Education", education.map((d) => `${d.name} (${d.abbreviation})`).reverse().join("; ")],
+    ["Education", education.map((d) => `${d.abbreviation}, ${institutionLabel(d) ?? ""}`).reverse().join("; ")],
     ["Focus", "Java, Spring Boot, distributed systems, DevOps, cloud infrastructure"],
     ["Research interests", "LLMs, multilingual embeddings, Nepali NLP, semantic search"],
   ];
@@ -62,8 +62,9 @@ export default function AboutPage() {
         <article className="prose prose-neutral max-w-none prose-headings:font-semibold prose-h2:text-2xl">
           <h2 id="background">Background</h2>
           <p>
-            I am a software developer from Nepal. I completed a Bachelor of Computer Applications (BCA) and a Master
-            of Information Technology (MIT), and I founded{" "}
+            I am a software developer from Nepal. I completed a Bachelor of Computer Applications (BCA) at Damak
+            Multiple Campus and a Master of Information Technology (MIT) at Bhaktapur Multiple Campus, both under
+            Tribhuvan University, and I founded{" "}
             <a href={company.url} rel="noopener">
               {company.name}
             </a>
@@ -104,10 +105,16 @@ export default function AboutPage() {
 
           <h2 id="a1-it-innovation">A1 IT Innovation</h2>
           <p>
-            {company.description} Its work covers Java and backend development, web and mobile applications, DevOps,
-            cloud and server infrastructure, system design, software architecture, technical consulting, and AI and
-            automation. Through A1 IT Innovation I contribute to the engineering of{" "}
-            <Link href="/projects/tufan-ride">Tufan Ride</Link>, a Nepal-based ride-sharing platform.
+            I founded {company.name}, a software development and IT solutions company in Nepal. Its work covers Java
+            and backend development, web and mobile applications, DevOps, cloud and server infrastructure, system
+            design, software architecture, technical consulting, and AI and automation.
+          </p>
+          <p>
+            My professional work is done through A1 IT Innovation: I contribute to the company&apos;s products and
+            client projects together with the rest of the team, mainly on backend development, DevOps and system
+            design. This includes <Link href="/projects/tufan-ride">Tufan Ride</Link>, a Nepal-based ride-sharing
+            platform, and <Link href="/projects/t-meet">T-Meet</Link>, a video conferencing system for education and
+            business meetings built in Nepal with a focus on data security.
           </p>
           <p>
             More detail: <Link href="/projects/a1-it-innovation">A1 IT Innovation</Link> ·{" "}
@@ -123,8 +130,8 @@ export default function AboutPage() {
                 <strong>
                   {d.name} ({d.abbreviation})
                 </strong>
-                {known(d.institution) && <> — {known(d.institution)}</>}
-                {known(d.year) && <>, {known(d.year)}</>}. {d.status}.
+                {institutionLabel(d) && <> — {institutionLabel(d)}</>}
+                {known(d.year) && <> ({known(d.year)})</>}. {d.status}.
                 <Placeholder todo={d.institution} />
                 <Placeholder todo={d.year} />
               </li>

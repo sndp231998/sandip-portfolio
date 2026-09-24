@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Placeholder } from "@/components/ui/Placeholder";
 import { TagList } from "@/components/ui/Tag";
-import { education } from "@/content/profile";
+import { education, institutionLabel } from "@/content/profile";
 import { experience, experienceTodo } from "@/content/experience";
 import { getProject } from "@/content/projects";
 import { pageGraph, type Crumb } from "@/lib/schema";
@@ -13,7 +13,7 @@ import { isTodo, known } from "@/lib/todo";
 
 const title = "Experience";
 const description =
-  "Professional experience of Sandip Chapagain: founder of A1 IT Innovation Pvt. Ltd., with engineering work on backend systems, DevOps and infrastructure, including the Tufan Ride platform.";
+  "Professional experience of Sandip Chapagain: founder of A1 IT Innovation Pvt. Ltd., contributing backend, DevOps and system design work to projects including Tufan Ride and T-Meet. BCA and MIT from Tribhuvan University.";
 
 export const metadata = buildMetadata({ title, description, path: "/experience" });
 
@@ -97,7 +97,9 @@ export default function ExperiencePage() {
               <li key={d.id} className="rounded-2xl border border-border bg-surface p-6">
                 <h3 className="font-semibold text-fg">{d.name}</h3>
                 <p className="mt-1 font-mono text-xs text-muted">
-                  {[d.abbreviation, known(d.institution), known(d.year), d.status].filter(Boolean).join(" · ")}
+                  {[d.abbreviation, known(d.year), d.status].filter(Boolean).join(" · ")}
+                </p>
+                <p className="mt-2 text-sm text-fg-soft">{institutionLabel(d)}
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{d.description}</p>
                 <Placeholder todo={d.institution} />

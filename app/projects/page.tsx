@@ -9,7 +9,7 @@ import { absoluteUrl } from "@/lib/utils";
 
 const title = "Projects";
 const description =
-  "Software projects by Sandip Chapagain, including engineering work on the Tufan Ride ride-sharing platform and A1 IT Innovation Pvt. Ltd. Each case study covers the problem, architecture and contribution.";
+  "Software projects Sandip Chapagain has contributed to through A1 IT Innovation, including the Tufan Ride ride-sharing platform and the T-Meet video conferencing system. Each case study covers the problem, architecture and his role.";
 
 export const metadata = buildMetadata({ title, description, path: "/projects" });
 

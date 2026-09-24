@@ -6,13 +6,14 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/Icons";
 import { Section } from "@/components/ui/Section";
-import { company, education, profile } from "@/content/profile";
+import { company, education, institutionLabel, profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { researchInterests } from "@/content/research/papers";
 import { skillGroups } from "@/content/skills";
 import { getAllPosts } from "@/lib/blog";
 import { pageGraph } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
+import { known } from "@/lib/todo";
 
 export const metadata = buildMetadata({
   description: profile.summary,
@@ -123,7 +124,7 @@ export default async function HomePage() {
           </Link>
         }
       >
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {featured.map((p) => (
             <ProjectCard key={p.slug} project={p} />
           ))}
@@ -180,7 +181,10 @@ export default async function HomePage() {
                   <p className="font-semibold text-fg">
                     {d.name} <span className="font-mono text-sm font-normal text-muted">({d.abbreviation})</span>
                   </p>
-                  <p className="mt-1 text-sm text-muted">{d.status}</p>
+                  <p className="mt-1 text-sm text-fg-soft">{institutionLabel(d)}</p>
+                  <p className="mt-1 font-mono text-xs text-muted">
+                    {[known(d.year), d.status].filter(Boolean).join(" · ")}
+                  </p>
                 </li>
               ))}
             </ol>
